@@ -11,8 +11,9 @@ const __dirname = path.dirname(__filename);
 
 // Read job data from file
 const jobs = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../server/job.json'))
+  fs.readFileSync(path.join(__dirname, '../job.json'))
 );
+
 
 let postData = [...jobs];
 
