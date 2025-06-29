@@ -1,47 +1,36 @@
-// ✅ Loads .env first
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import colors from 'colors';
+
 dotenv.config();
 
-import express from 'express';
-import path from 'path';
-import cors from 'cors';
-import posts from '../routes/posts.js'; // ✅ ✔✅
-import logger from '../middleware/logger.js'
-import errorHandler from '../middleware/error.js';
-import { fileURLToPath } from 'url';
-import notFound from '../middleware/notFound.js';
-
 const app = express();
-const PORT = process.env.PORT || 8000;
 
-// Body parser middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false}));
-
-
-// CORS
+// Middleware
 app.use(cors());
+app.use(express.json());
 
+// API routes
+import posts from './routes/posts.js';
+app.use('/api/posts', posts);
 
-// Logger Middleware
- app.use(logger);
-
-// ✅ Fix __dirname for ES modules
+// Serve frontend in production
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Optional: serve static files
- app.use(express.static(path.join(__dirname, 'public')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
 
-// ✅ Mount API route
-app.use('/api/posts', posts)
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'))
+  );
+}
 
-
-
-// Error handle
-app.use(notFound)
-app.use(errorHandler)
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`.yellow.bold);
 });
