@@ -18,7 +18,7 @@ const App = () => {
   // ✅ Add New Job
   const addJob = async (newJob) => {
     try {
-      const res = await fetch('http://localhost:8000/api/posts', {
+      const res = await fetch('/api/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ const App = () => {
   // ✅ Delete Job
   const deleteJob = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/posts/${id}`, {
+      const res = await fetch(`/api/posts/${id}`, {
         method: 'DELETE'
       });
 
@@ -53,10 +53,10 @@ const App = () => {
     }
   };
 
-  // ✅ Update Job (fix: use job.id)
+  // ✅ Update Job
   const updateJob = async (job) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/posts/${job.id}`, {
+      const res = await fetch(`/api/posts/${job.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -89,7 +89,6 @@ const App = () => {
   );
 
   return <RouterProvider router={router} />;
-
 };
 
 export default App;

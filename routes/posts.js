@@ -1,10 +1,20 @@
 import express from 'express';
-import jobs from '../server/job.json' assert { type: 'json' };
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const router = express.Router();
 
-// Use a copy of the job data for manipulation
-let postData =[...jobs]
+// Fix __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Read job data from file
+const jobs = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '../server/job.json'))
+);
+
+let postData = [...jobs];
 
 // ✅ GET all posts (optional limit)
 router.get('/', (req, res) => {
@@ -43,7 +53,6 @@ router.post('/', (req, res, next) => {
       company,
     } = req.body;
 
-    // Validate required fields
     if (
       !title ||
       !type ||
@@ -148,4 +157,5 @@ router.delete('/:id', (req, res, next) => {
 });
 
 export default router;
+
 
