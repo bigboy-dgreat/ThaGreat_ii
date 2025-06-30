@@ -9,8 +9,8 @@ const JobListing = ({ isHome = false }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       const apiUrl = isHome
-        ? 'http://localhost:8000/api/posts?limit=3'
-        : 'http://localhost:8000/api/posts';
+        ? 'https://have-backend.fly.dev/api/post?limit=3'
+        : 'https://have-backend.fly.dev/api/post';
 
       try {
         const res = await fetch(apiUrl);
