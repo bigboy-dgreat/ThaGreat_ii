@@ -23,14 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 .env
-
-
-
-
-#  "scripts": {
-#     "dev": "concurrently \"vite\" \"nodemon server.js\"",
-#     "build": "vite build",
-#     "lint": "eslint .",
-#     "preview": "vite preview",
-#     "server": "json-server --watch src/server.js --port 8000"
-#   },
